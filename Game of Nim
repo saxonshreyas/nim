@@ -1,0 +1,87 @@
+package main;
+import java.util.*;
+
+/**
+ * This version of the Game of Nim generates a random number between 10 and 100 and involves the human player playing against the computer to not pick the last marble. The simulator is enabled 
+ * with a smart and stupid version 
+ * 
+ * Shreyas Saxena and Kish Dubey  
+ * V1.0.0.1
+ */
+public class NumFinal
+{
+    public static void main(String [] args)
+    {
+        Scanner keyboard = new Scanner(System.in); // for allowing user to enter input into program
+        Random num = new Random();  // for random number generation
+        int num_left = num.nextInt(101-10)+10; //random number between 10 and 100. 
+        int computerMode = num.nextInt(2);
+        int subtraction = num_left;
+        boolean turn = num.nextBoolean();
+        System.out.println ("Welcome to the Game of Nim! In today's game we start out with "+ num_left + " marbles!");
+        if (computerMode == 0)
+        {
+            System.out.println ("You are playing against a Smart opponent. Best of Luck!");
+        } else if (computerMode == 1)
+        {
+            System.out.println ("You are playing against a Stupid opponent. You don't need luck!");
+        }
+        while (num_left > 1)
+        {
+            if (turn == true)
+            {
+                System.out.print("Please play your turn: ");
+                System.out.printf("Please enter then number of marbles you currently wish to take out of the pile. Please note that this number MUST be less than " + num_left/2 + ":");
+                subtraction = keyboard.nextInt();
+                num_left -= subtraction;
+                System.out.println("The number of marbles left is " + num_left);
+                turn = false;
+                if (subtraction == 0){
+                    System.out.println("You've missed your turn");
+                    turn = true;
+                }
+                if (subtraction > num_left/2)
+                {
+                    System.out.println("You've missed your turn");
+                    turn = true;
+                }
+            }
+            if (turn == false)
+            {
+                System.out.println("It is the computer's turn. Please wait.");
+                if (computerMode == 0)
+                {
+                    num_left = smartComputer(num_left);
+                    System.out.println("The number of marbles left is "+ num_left);
+                }
+                if(computerMode == 1)
+                {
+                    num_left -= num.nextInt(num_left/2);
+                    System.out.println("The number of marbles left is "+num_left);
+                }
+                turn = true;
+            }
+        }
+        if(num_left <= 1)
+        {
+            if (turn = false)
+            {
+                System.out.println("You Win! Congratulations for beating the computer!");
+            } else 
+            {
+                System.out.println("Pfffffffffft...you lost to a COMPUTER??!! Go back to first grade bruv");
+            }
+        }
+    }
+    public static int smartComputer (int num)
+    {
+        int power = 2;
+        while (power < num)
+        {
+            power *= 2;
+        }
+        power /= 2;
+        num = power -1;
+        return num;
+    }
+}
